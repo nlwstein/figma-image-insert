@@ -1,0 +1,7 @@
+{
+  "name": "figma-image-insert",
+  "id": "817195462243477511",
+  "api": "1.0.0",
+  "main": "bundle.js",
+  "ui": "ui.html"
+}

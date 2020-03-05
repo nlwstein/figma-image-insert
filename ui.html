@@ -1,0 +1,27 @@
+<script>
+    window.onmessage = async (event) => {
+        if (event.data.pluginMessage.type === 'networkRequest') {
+            var request = new XMLHttpRequest()
+            // This link has random lorem ipsum text
+            request.open('GET', 'https://screenshotty.herokuapp.com/?url=https://wasdkeyboards.com', true)
+            request.responseType = "arraybuffer";
+
+            request.onload = () => {
+
+                // From: https://stackoverflow.com/questions/8022425/getting-blob-data-from-xhr-request
+                var uInt8Array = new Uint8Array(request.response);
+                var i = uInt8Array.length;
+                var binaryString = new Array(i);
+                while (i--) {
+                    binaryString[i] = String.fromCharCode(uInt8Array[i]);
+                }
+                var data = binaryString.join('');
+                var base64 = window.btoa(data);
+                // End Base64 Generation
+
+                window.parent.postMessage({ pluginMessage: base64 }, '*')
+            };
+            request.send()
+        }
+    }
+</script>
